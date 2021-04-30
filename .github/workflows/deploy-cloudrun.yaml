@@ -21,8 +21,8 @@ jobs:
       - uses: docker/build-push-action@v2
         id: docker-build
         with:
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+          cache-from: type=gha
+          cache-to: type=gha
           context: .
           file: ./Dockerfile
           tags: ${{ steps.docker-meta.outputs.tags }}
