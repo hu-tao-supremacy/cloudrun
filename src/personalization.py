@@ -68,6 +68,7 @@ def personalization(event_id):
         events_ids = []
         vectors = []
         events_vectors = session.query(EventRecommendation).join(EventTag, EventTag.event_id == EventRecommendation.event_id).group_by(EventTag.event_id).with_entities(func.max(EventRecommendation.event_id), func.max(EventRecommendation.event_vector), func.array_agg(EventTag.tag_id))
+        print('items below', events_vectors)
         for item in events_vectors:
             print(items, 'items')
             delimiter = ','
