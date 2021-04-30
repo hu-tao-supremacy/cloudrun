@@ -35,6 +35,7 @@ else:
     database_connection_url = "postgresql://" + user + ":" + password + "@" + host + "?unix_socket=" + cloud_sql_connection_name
 
 engine = create_engine(database_connection_url)
+print('connected to sql server')
 
 
 class Event(Base):

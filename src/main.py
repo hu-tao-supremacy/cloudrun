@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, request
 from personalization import personalization
+import db_model
 
 app = Flask(__name__)
 
