@@ -1,8 +1,4 @@
 FROM continuumio/miniconda3:latest
-
-# Allow statements and log messages to immediately appear in the Knative logs
-ENV PYTHONUNBUFFERED True
-
 RUN conda install sqlalchemy flask psycopg2 -y
 RUN conda install -c conda-forge sentence-transformers unzip -y
 COPY /src /
