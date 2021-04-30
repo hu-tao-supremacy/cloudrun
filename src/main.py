@@ -3,9 +3,17 @@ import os
 from flask import Flask, request
 from personalization import personalization
 import db_model
+import logging as log
+import google.cloud.logging as logging
+
+logging_client = logging.Client()
+logging_client.setup_logging()
 
 app = Flask(__name__)
 
+
+
+log.info(f"Some log here") 
 
 print('starting')
 
