@@ -10,9 +10,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: crazy-max/ghaction-github-runtime@v1
       - uses: docker/setup-buildx-action@v1
-        with:
-          version: v0.5.1
-          driver-opts: image=tonistiigi/buildkit:github-actions-cache
       - uses: crazy-max/ghaction-docker-meta@v1
         id: docker-meta
         with:
@@ -26,8 +23,6 @@ jobs:
       - uses: docker/build-push-action@v2
         id: docker-build
         with:
-          cache-from: type=gha
-          cache-to: type=gha
           context: .
           file: ./Dockerfile
           tags: ${{ steps.docker-meta.outputs.tags }}
