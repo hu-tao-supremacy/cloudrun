@@ -18,13 +18,12 @@ app = Flask(__name__)
 
 print('starting')
 
-@app.route("/")
-def on_event_change():
+@app.route("/<event_id>")
+def on_event_change(event_id):
     """
         on_event_change() : This function will triggered when event is updated or created
     """
     try:
-        event_id = request.json['event_id']
         print(event_id, 'event_id')
         personalization(event_id)
     except Exception as e:
