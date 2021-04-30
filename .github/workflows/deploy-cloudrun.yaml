@@ -16,8 +16,9 @@ jobs:
       - name: Deploy to Cloud Run
         run: |-
           gcloud run deploy ${{ env.SERVICE }} \
-            --region $REGION \
+            --region ${{ env.REGION }} \
             --image gcr.io/hu-tao-supremacy-305006/${{ env.SERVICE }} \
             --platform managed
         env:
           SERVICE: personalization-core
+          REGUION: asia-southeast1
