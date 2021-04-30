@@ -7,6 +7,8 @@ import db_model
 app = Flask(__name__)
 
 
+print('starting')
+
 @app.route("/")
 def on_event_change():
     """
