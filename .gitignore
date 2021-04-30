@@ -23,7 +23,8 @@ ipython_config.py
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -150,6 +151,7 @@ celerybeat.pid
 
 # Environments
 # .env
+.env
 .env/
 .venv/
 env/
