@@ -25,6 +25,7 @@ def on_event_change():
     """
     try:
         event_id = request.json['event_id']
+        print(event_id, 'event_id')
         personalization(event_id)
     except Exception as e:
         return f"An Error Occured: {e}"
