@@ -33,7 +33,7 @@ else:
     unix_socket = "{}/{}".format(
                 db_socket_dir,
                 cloud_sql_connection_name)
-    database_connection_url = "postgresql://" + user + ":" + password + "@" + host + "?unix_socket=" + cloud_sql_connection_name
+    database_connection_url = "postgresql://" + user + ":" + password + "@/" + db + "?unix_socket=" + cloud_sql_connection_name
     print(database_connection_url, 'url')
 engine = create_engine(database_connection_url)
 print('connected to sql server')
