@@ -18,7 +18,9 @@ jobs:
           gcloud run deploy ${{ env.SERVICE }} \
             --region ${{ env.REGION }} \
             --image gcr.io/hu-tao-supremacy-305006/${{ env.SERVICE }} \
-            --platform managed
+            --platform managed \
+            --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE }} \
+            --update-env-vars INSTANCE_CONNECTION_NAME="${{ secrets.CLOUD_SQL_INSTANCE }}"
         env:
           SERVICE: personalization-core
           REGION: asia-southeast1
