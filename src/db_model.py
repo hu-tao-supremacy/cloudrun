@@ -23,6 +23,7 @@ host = os.environ.get("POSTGRES_HOST")
 db = os.environ.get("POSTGRES_DB")
 is_prod = os.environ.get("K_SERVICE")
 
+print('trying to connect to sql server', is_prod)
 database_connection_url = ''
 if not is_prod:
     database_connection_url = "postgresql://" + user + ":" + password + "@" + host + "/" + db
@@ -33,7 +34,7 @@ else:
                 db_socket_dir,
                 cloud_sql_connection_name)
     database_connection_url = "postgresql://" + user + ":" + password + "@" + host + "?unix_socket=" + cloud_sql_connection_name
-
+    print(database_connection_url, 'url')
 engine = create_engine(database_connection_url)
 print('connected to sql server')
 
