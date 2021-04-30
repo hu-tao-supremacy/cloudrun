@@ -24,7 +24,6 @@ def on_event_change(event_id):
         on_event_change(event_id) : This function will triggered when event is updated or created
     """
     try:
-        print(event_id, 'event_id')
         personalization(int(event_id))
     except Exception as e:
         return f"An Error Occured: {e}"

@@ -37,7 +37,7 @@ def personalization(event_id):
 
         #  convert event description it into vector form 
         from sentence_transformers import SentenceTransformer
-        sbert_model = SentenceTransformer('stsb-roberta-large-model')
+        sbert_model = SentenceTransformer('src/stsb-roberta-large-model')
         sentence_embeddings = sbert_model.encode(event_description, show_progress_bar =True)
 
         
@@ -117,3 +117,6 @@ def personalization(event_id):
         raise
     finally:
         session.close()
+
+
+personalization(7)

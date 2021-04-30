@@ -22,13 +22,13 @@ password = os.environ.get("POSTGRES_PASSWORD")
 host = os.environ.get("POSTGRES_HOST")
 db = os.environ.get("POSTGRES_DB")
 is_prod = os.environ.get("K_SERVICE")
-cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
-db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
 
 database_connection_url = ''
 if not is_prod:
     database_connection_url = "postgresql://" + user + ":" + password + "@" + host + "/" + db
 else:
+    cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
+    db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
     unix_sock = "{}/{}/.s.PGSQL.5432".format(
                 db_socket_dir,
                 cloud_sql_connection_name)
