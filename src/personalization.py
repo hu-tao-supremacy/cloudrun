@@ -48,6 +48,7 @@ def personalization(event_id):
                 event_id = event_id,
                 event_vector = sentence_embeddings.tolist()
             )
+            print('event vector')
             session.add(event_vector)
         else:
             event_vector.event_vector = sentence_embeddings.tolist()
@@ -64,13 +65,19 @@ def personalization(event_id):
     session = DBSession()
     try:
         # query all events, events_tag, events_vector from DB
+
+        events_vectors_debug = session.query(EventRecommendation).all()
+        for item in events_vectors_debug:
+            print('items')
+            print(item)
         tags_ids = []
         events_ids = []
         vectors = []
         events_vectors = session.query(EventRecommendation).join(EventTag, EventTag.event_id == EventRecommendation.event_id).group_by(EventTag.event_id).with_entities(func.max(EventRecommendation.event_id), func.max(EventRecommendation.event_vector), func.array_agg(EventTag.tag_id))
         print('items below', events_vectors)
         for item in events_vectors:
-            print(items, 'items')
+            print('items2')
+            print(items)
             delimiter = ','
             items = map(str, item[2])
             tags_ids.append(delimiter.join(items))
