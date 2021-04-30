@@ -11,7 +11,7 @@ print_to_stdout("Hello World")
 
 
 from flask import Flask, request
-from personalization import personalization
+# from personalization import personalization
 import db_model
 
 app = Flask(__name__)
