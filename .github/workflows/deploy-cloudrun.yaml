@@ -21,4 +21,4 @@ jobs:
             --platform managed
         env:
           SERVICE: personalization-core
-          REGUION: asia-southeast1
+          REGION: asia-southeast1
