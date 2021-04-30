@@ -21,11 +21,11 @@ print('starting')
 @app.route("/<event_id>")
 def on_event_change(event_id):
     """
-        on_event_change() : This function will triggered when event is updated or created
+        on_event_change(event_id) : This function will triggered when event is updated or created
     """
     try:
         print(event_id, 'event_id')
-        personalization(event_id)
+        personalization(int(event_id))
     except Exception as e:
         return f"An Error Occured: {e}"
     return True
