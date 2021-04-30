@@ -25,7 +25,6 @@ is_prod = os.environ.get("K_SERVICE")
 cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
 db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
 
-print('trying to connect to sql server', is_prod)
 database_connection_url = ''
 if not is_prod:
     database_connection_url = "postgresql://" + user + ":" + password + "@" + host + "/" + db
@@ -33,8 +32,7 @@ else:
     unix_sock = "{}/{}/s.PGSQL.5432".format(
                 db_socket_dir,
                 cloud_sql_connection_name)
-    database_connection_url = "postgresql://" + user + ":" + password + "@/" + db + "?unix_sock=" + unix_sock
-    print(database_connection_url, 'url')
+    database_connection_url = "postgresql+pg8000://" + user + ":" + password + "@/" + db + "?unix_sock=" + unix_sock
 engine = create_engine(database_connection_url)
 print('connected to sql server')
 
