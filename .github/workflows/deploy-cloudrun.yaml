@@ -20,4 +20,4 @@ jobs:
             --image gcr.io/hu-tao-supremacy-305006/${{ env.SERVICE }} \
             --platform managed
         env:
-          SERVICE: personlization-core
+          SERVICE: personalization-core
