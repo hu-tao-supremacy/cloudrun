@@ -1,14 +1,5 @@
 import os
-
-from flask import Flask, request
-from personalization import personalization
-import db_model
-
-app = Flask(__name__)
-
-
 import sys
-  
   
 def print_to_stdout(*a):
   
@@ -17,6 +8,18 @@ def print_to_stdout(*a):
     print(*a, file = sys.stdout)
   
 print_to_stdout("Hello World")
+
+
+from flask import Flask, request
+from personalization import personalization
+import db_model
+
+app = Flask(__name__)
+
+
+
+  
+
 
 
 print('starting')
