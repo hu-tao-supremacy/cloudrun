@@ -8,14 +8,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: docker/setup-buildx-action@v1
+        with:
+          version: v0.5.1
+          driver-opts: image=tonistiigi/buildkit:github-actions-cache
+      - uses: crazy-max/ghaction-docker-meta@v1
+        id: docker-meta
+        with:
+          images: gcr.io/hu-tao-supremacy-305006/personalization-core
       - uses: google-github-actions/setup-gcloud@master
         with:
           project_id: hu-tao-supremacy-305006
           service_account_key: ${{ secrets.CLOUD_FUNCTIONS_CREDENTIALS }}
           export_default_credentials: true
-      - name: Submit to Cloud Build
-        run: |-
-          gcloud builds submit --tag gcr.io/hu-tao-supremacy-305006/personalization-core:latest
+      - run: gcloud auth configure-docker
+      - uses: docker/build-push-action@v2
+        id: docker-build
+        with:
+          cache-from: type=gha
+          cache-to: type=gha
+          context: .
+          file: ./Dockerfile
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
+          push: true
       - name: Deploy to Cloud Run
         run: |-
           gcloud run deploy ${{ env.SERVICE }} \
