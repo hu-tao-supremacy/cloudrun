@@ -1,3 +1,4 @@
+FROM continuumio/miniconda3:latest
 RUN conda install sqlalchemy flask psycopg2 -y
 RUN conda install -c conda-forge sentence-transformers unzip -y
 COPY /src /
