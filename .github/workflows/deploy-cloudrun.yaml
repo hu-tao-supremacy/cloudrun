@@ -23,8 +23,8 @@ jobs:
         with:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
-          context: ./${{ env.DEPLOYS_REPOSITORY }}
-          file: ./deploys/build-scripts/${{ env.DEPLOYS_REPOSITORY }}.Dockerfile
+          context: .
+          file: ./Dockerfile
           tags: ${{ steps.docker-meta.outputs.tags }}
           labels: ${{ steps.docker-meta.outputs.labels }}
           push: true
