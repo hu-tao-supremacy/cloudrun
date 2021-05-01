@@ -1,29 +1,31 @@
+import base64
+import json
+from sqlalchemy import func
+from db_model import (
+    Event,
+    EventDuration,
+    DBSession,
+    Tag,
+    EventTag,
+    EventRecommendation
+)
+from sentence_transformers import SentenceTransformer
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
+from sklearn.metrics.pairwise import cosine_similarity 
+
+
+def tokenizer(text):
+    return map(str.strip, text.split(','))
+
 def personalization(event_id):
     """
-    Generate event's vector representation, triggered on event created/updated
+    Generate event's vector representation, generate cosine similarity, and store to databasetriggered on event created/updated
     Args:
-        cloud_function_event (dict) : The dictionary with data specific to this type of event.
-        - The `data` field contains the PubsubMessage message which is event's id.
+        event_id: id of the event (integer)
     """
 
-    import base64
-    import json
-    from sqlalchemy import func
-    from db_model import (
-        Event,
-        EventDuration,
-        DBSession,
-        Tag,
-        EventTag,
-        EventRecommendation
-    )
-    import numpy as np
-    
-    def tokenizer(text):
-        return map(str.strip, text.split(','))
-
-
-   
     event_description = ''
     session = DBSession()
     try:
@@ -37,7 +39,6 @@ def personalization(event_id):
             raise Exception("Event not found")
 
         #  convert event description it into vector form 
-        from sentence_transformers import SentenceTransformer
         sbert_model = SentenceTransformer('src/stsb-roberta-large-model')
         sentence_embeddings = sbert_model.encode(event_description, show_progress_bar =True)
 
@@ -79,18 +80,15 @@ def personalization(event_id):
             vectors.append(item[1])
 
          # calculate tf-idf
-        from sklearn.feature_extraction.text import TfidfVectorizer 
         vectorizer = TfidfVectorizer(tokenizer = tokenizer)
         tf_idf_sparce_array = vectorizer.fit_transform(tags_ids)
         tf_idf_feature = tf_idf_sparce_array.toarray()
 
         # calculate cosine similarity of tf-idf
-        from sklearn.metrics.pairwise import linear_kernel
         cosine_sim_des_tags = linear_kernel(tf_idf_feature, tf_idf_feature)
 
 
         # calculate cosine similarity of event vector
-        from sklearn.metrics.pairwise import cosine_similarity
         cosine_sim_des_descriptions = cosine_similarity(vectors, vectors)
 
         # combine tf-idf with event vector
