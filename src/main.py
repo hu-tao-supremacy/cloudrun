@@ -27,7 +27,7 @@ def on_event_change(event_id):
         personalization(int(event_id))
     except Exception as e:
         return f"An Error Occured: {e}"
-    return True
+    return "Success"
 
 
 if __name__ == "__main__":
