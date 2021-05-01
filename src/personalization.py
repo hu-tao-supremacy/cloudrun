@@ -33,7 +33,8 @@ def personalization(event_id):
         )
         if query_event is not None:
             event_description = query_event.description
-
+        else:
+            raise Exception("Event not found")
 
         #  convert event description it into vector form 
         from sentence_transformers import SentenceTransformer
