@@ -93,7 +93,7 @@ class EventTag(Base):
 
 
 class EventRecommendation(Base):
-    __tablename__ = "event_vector"
+    __tablename__ = "event_recommendation"
     
     def __str__(self):
         return str(self.__class__) + ": " + str(self.__dict__)
