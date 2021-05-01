@@ -70,7 +70,7 @@ def personalization(event_id):
         events_ids = []
         vectors = []
         events_vectors = session.query(EventRecommendation).join(EventTag, EventTag.event_id == EventRecommendation.event_id).group_by(EventTag.event_id).with_entities(func.max(EventRecommendation.event_id), func.max(EventRecommendation.event_vector), func.array_agg(EventTag.tag_id))
-        if len(events_vectors) == 0:
+        if events_vectors.count() == 0:
             raise Exception("No events available to generate recommendation")
         
         for item in events_vectors:
