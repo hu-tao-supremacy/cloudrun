@@ -71,6 +71,8 @@ def personalization(event_id):
         for item in events_vectors:
             delimiter = ','
             items = map(str, item[2])
+            if not item[2]:
+                continue
             tags_ids.append(delimiter.join(items))
             events_ids.append(item[0])
             vectors.append(item[1])
@@ -107,7 +109,7 @@ def personalization(event_id):
         for score in k_highest_score:
             score_result = {}
             for item in score[1:]:
-                score_result[int(item[0])] = item[1] 
+                score_result[int(item[0])] = item[1]
             event_vector = session.query(EventRecommendation).filter_by(event_id = int(score[0][0])).first() 
             event_vector.score = score_result
 
