@@ -69,11 +69,11 @@ def personalization(event_id):
         vectors = []
         events_vectors = session.query(EventRecommendation).join(EventTag, EventTag.event_id == EventRecommendation.event_id).group_by(EventTag.event_id).with_entities(func.max(EventRecommendation.event_id), func.max(EventRecommendation.event_vector), func.array_agg(EventTag.tag_id))
         for item in events_vectors:
-            delimiter = ','
-            items = map(str, item[2])
             if not item[2]:
                 continue
-            tags_ids.append(delimiter.join(items))
+            delimiter = ','
+            tags = map(str, item[2])
+            tags_ids.append(delimiter.join(tags))
             events_ids.append(item[0])
             vectors.append(item[1])
 
