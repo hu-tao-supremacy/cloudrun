@@ -25,6 +25,7 @@ def index():
         print(f"error: {msg}")
         return f"Bad Request: {msg}", 400
 
+    print("Valid Pub/Sub message format")
     pubsub_message = envelope["message"]
     print(pubsub_message)
 
