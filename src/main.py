@@ -1,14 +1,5 @@
 import os
 import sys
-  
-# def print_to_stdout(*a):
-  
-#     # Here a is the array holding the objects
-#     # passed as the arguement of the function
-#     print(*a, file = sys.stdout)
-  
-# print_to_stdout("Hello World")
-
 
 from flask import Flask, request
 from personalization import personalization
@@ -16,9 +7,10 @@ import db_model
 import base64
 import json
 
-app = Flask(__name__)  
+app = Flask(__name__)
 
-print('starting')
+print("Starting Flask")
+
 
 @app.route("/pubsub", methods=["POST"])
 def index():
@@ -41,10 +33,11 @@ def index():
 
     return ("", 204)
 
+
 @app.route("/<event_id>")
 def on_event_change(event_id):
     """
-        on_event_change(event_id) : This function will triggered when event is updated or created
+    on_event_change(event_id) : This function will triggered when event is updated or created
     """
     try:
         personalization(int(event_id))

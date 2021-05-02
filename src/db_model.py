@@ -9,7 +9,7 @@ from sqlalchemy import (
     Enum,
     ARRAY,
     FLOAT,
-    JSON
+    JSON,
 )
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -23,18 +23,27 @@ host = os.environ.get("POSTGRES_HOST")
 db = os.environ.get("POSTGRES_DB")
 is_prod = os.environ.get("K_SERVICE")
 
-database_connection_url = ''
+database_connection_url = ""
 if not is_prod:
-    database_connection_url = "postgresql://" + user + ":" + password + "@" + host + "/" + db
+    database_connection_url = (
+        "postgresql://" + user + ":" + password + "@" + host + "/" + db
+    )
 else:
     cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
     db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
-    unix_sock = "{}/{}/.s.PGSQL.5432".format(
-                db_socket_dir,
-                cloud_sql_connection_name)
-    database_connection_url = "postgresql+pg8000://" + user + ":" + password + "@/" + db + "?unix_sock=" + unix_sock
+    unix_sock = "{}/{}/.s.PGSQL.5432".format(db_socket_dir, cloud_sql_connection_name)
+    database_connection_url = (
+        "postgresql+pg8000://"
+        + user
+        + ":"
+        + password
+        + "@/"
+        + db
+        + "?unix_sock="
+        + unix_sock
+    )
 engine = create_engine(database_connection_url)
-print('connected to sql server')
+print("connected to sql server")
 
 
 class Event(Base):
@@ -94,15 +103,14 @@ class EventTag(Base):
 
 class EventRecommendation(Base):
     __tablename__ = "event_recommendation"
-    
+
     def __str__(self):
         return str(self.__class__) + ": " + str(self.__dict__)
-    
+
     id = Column(Integer, primary_key=True)
     event_id = Column(Integer, ForeignKey("event.id"))
     event_vector = Column(ARRAY(FLOAT))
     score = Column(JSON)
-
 
 
 Base.metadata.create_all(engine)
