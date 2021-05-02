@@ -27,10 +27,11 @@ def index():
 
     print("Valid Pub/Sub message format")
     pubsub_message = envelope["message"]
-    print(pubsub_message)
 
-    if isinstance(pubsub_message, dict) and "eventId" in pubsub_message:
-        event_id = base64.b64decode(pubsub_message["eventId"]).decode("utf-8").strip()
+    if isinstance(pubsub_message, dict) and "data" in pubsub_message:
+        data = base64.b64decode(pubsub_message["data"]).decode("utf-8").strip()
+        payload = json.loads(data)
+        event_id = payload['eventId']
         print(f"Pub/Sub {event_id}!")
 
     return ("", 204)
