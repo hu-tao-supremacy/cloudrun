@@ -26,6 +26,7 @@ def index():
         return f"Bad Request: {msg}", 400
 
     pubsub_message = envelope["message"]
+    print(pubsub_message)
 
     if isinstance(pubsub_message, dict) and "eventId" in pubsub_message:
         event_id = base64.b64decode(pubsub_message["eventId"]).decode("utf-8").strip()
