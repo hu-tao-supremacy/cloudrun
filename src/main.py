@@ -32,22 +32,12 @@ def index():
         data = base64.b64decode(pubsub_message["data"]).decode("utf-8").strip()
         payload = json.loads(data)
         event_id = payload['eventId']
-        print(f"Pub/Sub {event_id}!")
+        try:
+            personalization(int(event_id))
+        except Exception as e:
+            return f"Error: {e}"
 
     return ("", 204)
-
-
-@app.route("/<event_id>")
-def on_event_change(event_id):
-    """
-    on_event_change(event_id) : This function will triggered when event is updated or created
-    """
-    try:
-        personalization(int(event_id))
-    except Exception as e:
-        return f"An Error Occured: {e}"
-    return "Success"
-
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
