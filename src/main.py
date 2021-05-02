@@ -35,7 +35,7 @@ def index():
 
     pubsub_message = envelope["message"]
 
-    if isinstance(pubsub_message, dict) and "data" in pubsub_message:
+    if isinstance(pubsub_message, dict) and "eventId" in pubsub_message:
         event_id = base64.b64decode(pubsub_message["eventId"]).decode("utf-8").strip()
 
     print(f"Pub/Sub {event_id}!")
